@@ -9,19 +9,10 @@ jobs:
   cache-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
       - name: prime-cache-4fb03de
-        run: |
-          echo "Caching dependencies..."
-          # Restore cache
-          cache-hit=false
-          if [ -d "$HOME/.npm" ]; then
-            cache-hit=true
-          fi
-          echo "Cache hit: $cache-hit"
         uses: actions/cache@v4
         with:
           path: ~/.npm
           key: cache-4fb03de
+        run: |
+          echo "Cache hit: ${{ steps.prime-cache-4fb03de.outputs.cache-hit }}"

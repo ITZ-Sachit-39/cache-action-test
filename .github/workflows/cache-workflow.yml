@@ -12,12 +12,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: prime-cache-4fb03de    # <-- step NAME matches the question
-        id: cache-step                # <-- step ID used to reference output
+      - name: prime-cache-4fb03de
+        run: |
+          echo "Caching dependencies..."
+          # Restore cache
+          cache-hit=false
+          if [ -d "$HOME/.npm" ]; then
+            cache-hit=true
+          fi
+          echo "Cache hit: $cache-hit"
         uses: actions/cache@v4
         with:
-          path: ~/.npm               # Node.js example, change if needed
+          path: ~/.npm
           key: cache-4fb03de
-
-      - name: Show cache result
-        run: echo "Cache hit: ${{ steps.cache-step.outputs.cache-hit }}"
